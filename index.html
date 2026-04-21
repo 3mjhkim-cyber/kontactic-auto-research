@@ -140,7 +140,7 @@
   <div class="empty-state" id="emptyState" style="display:none;">No brands yet.<br>Click + ADD BRAND to get started.</div>
 </main>
 
-<div class="modal-overlay" id="modalOverlay" onclick="handleOverlayClick(event)">
+<div class="modal-overlay" id="modalOverlay" onmousedown="handleOverlayMouseDown(event)" onclick="handleOverlayClick(event)">
   <div class="modal">
     <div class="modal-header">
       <div class="modal-title" id="modalTitle">ADD BRAND</div>
@@ -301,7 +301,9 @@ function updateCheckLinks(name) {
 }
 
 function closeModal() { document.getElementById('modalOverlay').classList.remove('open'); editingId = null; }
-function handleOverlayClick(e) { if (e.target === document.getElementById('modalOverlay')) closeModal(); }
+let _mouseDownOnOverlay = false;
+function handleOverlayMouseDown(e) { _mouseDownOnOverlay = e.target === document.getElementById('modalOverlay'); }
+function handleOverlayClick(e) { if (_mouseDownOnOverlay && e.target === document.getElementById('modalOverlay')) closeModal(); }
 
 async function saveBrand() {
   const name = document.getElementById('fName').value.trim();
